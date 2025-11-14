@@ -1,3 +1,36 @@
 spring:
   application:
     name: mdd
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
+mdd:
+  app:
+    jwtSecret: ${JWT_SECRET}
+    jwtExpirationInMs: 864000000
+
+#Tomcat configuration
+server:
+  port: 9000
+
+#Log level configuration
+logging:
+  level:
+    root: ERROR
+    com:
+      orion: INFO
+    org:
+      springframework:
+        boot:
+          autoconfigure:
+            mysql: INFO
+          web:
+            embedded:
+              tomcat: INFO
