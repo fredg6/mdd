@@ -1,4 +1,4 @@
-package com.orion.mdd.dto;
+package com.orion.mdd.dto.payload.request;
 
 import jakarta.validation.constraints.*;
 

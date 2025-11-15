@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-@Entity
 @Accessors(chain = true)
 @Getter
 @Setter
@@ -16,6 +15,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Builder
 @ToString
+@Entity
 public class User extends BaseEntity {
     public static final String TABLE_NAME = "user";
     public static final String EMAIL_COLUMN_NAME = "email";

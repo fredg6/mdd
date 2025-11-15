@@ -30,6 +30,7 @@
         <java.version>25</java.version>
         <io.jsonwebtoken.version>0.13.0</io.jsonwebtoken.version>
         <commons-validator.version>1.10.0</commons-validator.version>
+        <commons-lang3.version>3.19.0</commons-lang3.version>
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
     </properties>
     <dependencies>
@@ -79,6 +80,10 @@
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
             <version>${commons-validator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>

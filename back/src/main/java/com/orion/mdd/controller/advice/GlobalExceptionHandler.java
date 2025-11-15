@@ -1,6 +1,6 @@
 package com.orion.mdd.controller.advice;
 
-import com.orion.mdd.dto.FieldErrorDto;
+import com.orion.mdd.dto.payload.response.FieldErrorDto;
 import com.orion.mdd.exception.FieldsWithValueAlreadyTakenException;
 import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
