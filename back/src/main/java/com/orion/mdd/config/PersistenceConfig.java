@@ -2,6 +2,7 @@ package com.orion.mdd.config;
 
 import com.orion.mdd.model.Auditable;
 import com.orion.mdd.model.BaseEntity;
+import com.orion.mdd.model.Topic;
 import com.orion.mdd.model.User;
 import com.orion.mdd.security.model.RefreshToken;
 import org.hibernate.boot.Metadata;
@@ -19,27 +20,37 @@ import java.util.Map;
 
 @Configuration
 public class PersistenceConfig extends ColumnOrderingStrategyStandard implements HibernatePropertiesCustomizer {
+    private final List<String> joinTableNames = List.of(User.SUBSCRIPTION_JOIN_TABLE_NAME);
+
     @Override
     public List<Column> orderTableColumns(Table table, Metadata metadata) {
         var toReturn = new ArrayList<Column>();
 
-        toReturn.add(getColumn(table, BaseEntity.ID_COLUMN_NAME));
-        switch (table.getName()) {
-            case User.TABLE_NAME -> {
-                toReturn.add(getColumn(table, User.EMAIL_COLUMN_NAME));
-                toReturn.add(getColumn(table, User.USERNAME_COLUMN_NAME));
-                toReturn.add(getColumn(table, User.PASSWORD_COLUMN_NAME));
+        if (joinTableNames.contains(table.getName())) {
+            toReturn.addAll(table.getColumns());
+        } else {
+            toReturn.add(getColumn(table, BaseEntity.ID_COLUMN_NAME));
+            switch (table.getName()) {
+                case User.TABLE_NAME -> {
+                    toReturn.add(getColumn(table, User.EMAIL_COLUMN_NAME));
+                    toReturn.add(getColumn(table, User.USERNAME_COLUMN_NAME));
+                    toReturn.add(getColumn(table, User.PASSWORD_COLUMN_NAME));
+                }
+                case Topic.TABLE_NAME -> {
+                    toReturn.add(getColumn(table, Topic.TITLE_COLUMN_NAME));
+                    toReturn.add(getColumn(table, Topic.DESCRIPTION_COLUMN_NAME));
+                }
+                case RefreshToken.TABLE_NAME -> {
+                    toReturn.add(getColumn(table, RefreshToken.USER_ID_COLUMN_NAME));
+                    toReturn.add(getColumn(table, RefreshToken.TOKEN_COLUMN_NAME));
+                    toReturn.add(getColumn(table, RefreshToken.EXPIRY_DATE_COLUMN_NAME));
+                }
             }
-            case RefreshToken.TABLE_NAME -> {
-                toReturn.add(getColumn(table, RefreshToken.USER_ID_COLUMN_NAME));
-                toReturn.add(getColumn(table, RefreshToken.TOKEN_COLUMN_NAME));
-                toReturn.add(getColumn(table, RefreshToken.EXPIRY_DATE_COLUMN_NAME));
-            }
+            toReturn.addLast(getColumn(table, Auditable.CREATED_AT_COLUMN_NAME));
+            toReturn.addLast(getColumn(table, Auditable.CREATED_BY_COLUMN_NAME));
+            toReturn.addLast(getColumn(table, Auditable.UPDATED_AT_COLUMN_NAME));
+            toReturn.addLast(getColumn(table, Auditable.UPDATED_BY_COLUMN_NAME));
         }
-        toReturn.addLast(getColumn(table, Auditable.CREATED_AT_COLUMN_NAME));
-        toReturn.addLast(getColumn(table, Auditable.CREATED_BY_COLUMN_NAME));
-        toReturn.addLast(getColumn(table, Auditable.UPDATED_AT_COLUMN_NAME));
-        toReturn.addLast(getColumn(table, Auditable.UPDATED_BY_COLUMN_NAME));
 
         return toReturn;
     }
