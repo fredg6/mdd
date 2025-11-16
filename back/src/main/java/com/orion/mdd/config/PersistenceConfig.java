@@ -1,5 +1,6 @@
 package com.orion.mdd.config;
 
+import com.orion.mdd.model.Auditable;
 import com.orion.mdd.model.BaseEntity;
 import com.orion.mdd.model.User;
 import com.orion.mdd.security.model.RefreshToken;
@@ -35,8 +36,10 @@ public class PersistenceConfig extends ColumnOrderingStrategyStandard implements
                 toReturn.add(getColumn(table, RefreshToken.EXPIRY_DATE_COLUMN_NAME));
             }
         }
-        toReturn.addLast(getColumn(table, BaseEntity.CREATED_AT_COLUMN_NAME));
-        toReturn.addLast(getColumn(table, BaseEntity.UPDATED_AT_COLUMN_NAME));
+        toReturn.addLast(getColumn(table, Auditable.CREATED_AT_COLUMN_NAME));
+        toReturn.addLast(getColumn(table, Auditable.CREATED_BY_COLUMN_NAME));
+        toReturn.addLast(getColumn(table, Auditable.UPDATED_AT_COLUMN_NAME));
+        toReturn.addLast(getColumn(table, Auditable.UPDATED_BY_COLUMN_NAME));
 
         return toReturn;
     }
