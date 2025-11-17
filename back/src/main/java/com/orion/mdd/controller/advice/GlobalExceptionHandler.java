@@ -1,8 +1,10 @@
 package com.orion.mdd.controller.advice;
 
 import com.orion.mdd.dto.payload.response.FieldErrorDto;
+import com.orion.mdd.dto.payload.response.MessageDto;
 import com.orion.mdd.exception.FieldsWithValueAlreadyTakenException;
 import com.orion.mdd.exception.NotFoundException;
+import com.orion.mdd.exception.RefreshTokenException;
 import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,11 +36,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         var fieldErrors = new ArrayList<FieldErrorDto>();
         ex.getFieldNames().forEach(fn -> fieldErrors.add(new FieldErrorDto(fn, "déjà utilisé")));
 
-        return new ResponseEntity<>(fieldErrors, HttpStatus.BAD_REQUEST);
+        return ResponseEntity.badRequest().body(fieldErrors);
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<String> handleNotFoundException(NotFoundException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    public ResponseEntity<MessageDto> handleNotFoundException(NotFoundException ex) {
+        return new ResponseEntity<>(new MessageDto(ex.getMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(RefreshTokenException.class)
+    public ResponseEntity<MessageDto> handleRefreshTokenException(RefreshTokenException ex) {
+        return ResponseEntity.badRequest().body(new MessageDto(ex.getMessage()));
     }
 }

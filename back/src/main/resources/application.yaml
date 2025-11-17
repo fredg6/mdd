@@ -13,7 +13,7 @@ spring:
 
 jwt:
   secret: ${JWT_SECRET}
-  durationInMs: 3600000
+  durationInMs: 300000
   refreshTokenDurationInMs: 86400000
 
 #Tomcat configuration

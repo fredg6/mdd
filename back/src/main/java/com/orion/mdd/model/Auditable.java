@@ -35,7 +35,7 @@ public abstract class Auditable implements Serializable {
 
     @Column(nullable = false, updatable = false)
     @CreatedBy
-    protected String createdBy = "SYSTEM";
+    protected String createdBy;
 
     @LastModifiedBy
     protected String updatedBy;
