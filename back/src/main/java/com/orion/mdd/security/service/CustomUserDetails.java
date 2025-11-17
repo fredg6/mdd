@@ -19,6 +19,7 @@ public class CustomUserDetails implements UserDetails {
     @Serial
     private static final long serialVersionUID = 1L;
     private Long id;
+    private String email;
     private String username;
     @JsonIgnore
     private String password;
