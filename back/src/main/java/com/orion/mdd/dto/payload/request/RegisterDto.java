@@ -2,7 +2,7 @@ package com.orion.mdd.dto.payload.request;
 
 import jakarta.validation.constraints.*;
 
-public record UserDto(
+public record RegisterDto(
         @NotEmpty @Email String email,
         @NotBlank String username,
         @NotNull @Pattern(regexp = PASSWORD_PATTERN, message = PASSWORD_CONSTRAINT_MESSAGE) String password) {

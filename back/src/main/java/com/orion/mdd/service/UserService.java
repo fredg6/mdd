@@ -1,7 +1,9 @@
 package com.orion.mdd.service;
 
-import com.orion.mdd.dto.payload.request.UserDto;
+import com.orion.mdd.dto.payload.request.RegisterDto;
+import com.orion.mdd.dto.payload.response.UserDto;
 import com.orion.mdd.exception.FieldsWithValueAlreadyTakenException;
+import com.orion.mdd.exception.NotFoundException;
 import com.orion.mdd.mapper.UserMapper;
 import com.orion.mdd.model.User;
 import com.orion.mdd.repository.UserRepository;
@@ -35,8 +37,8 @@ public class UserService {
         this.jwtUtils = jwtUtils;
     }
 
-    public Map<String, String> register(UserDto userDto) {
-        var user = UserMapper.INSTANCE.userDtoToUser(userDto);
+    public Map<String, String> register(RegisterDto registerDto) {
+        var user = UserMapper.INSTANCE.registerDtoToUser(registerDto);
         var fieldsWithValueAlreadyTaken = getFieldsWithValueAlreadyTaken(user);
         if (isNotEmpty(fieldsWithValueAlreadyTaken)) {
             throw new FieldsWithValueAlreadyTakenException(fieldsWithValueAlreadyTaken);
@@ -44,6 +46,7 @@ public class UserService {
         var rawPassword = user.getPassword();
         user.setPassword(passwordEncoder.encode(rawPassword));
         userRepository.save(user);
+
         return login(user.getUsername(), rawPassword);
     }
 
@@ -64,6 +67,13 @@ public class UserService {
         var jwt = jwtUtils.generateJwt(authentication);
         var principal = (CustomUserDetails) authentication.getPrincipal();
         var refreshToken = refreshTokenService.createRefreshToken(principal.getId());
+
         return Map.of("jwt", jwt, "refreshToken", refreshToken.getToken());
+    }
+
+    public UserDto getUserByUsername(String username) {
+        var user = userRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("User not found with username: " + username));
+
+        return UserMapper.INSTANCE.userToUserDto(user);
     }
 }
