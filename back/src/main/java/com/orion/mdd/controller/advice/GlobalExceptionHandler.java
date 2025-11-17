@@ -2,6 +2,7 @@ package com.orion.mdd.controller.advice;
 
 import com.orion.mdd.dto.payload.response.FieldErrorDto;
 import com.orion.mdd.exception.FieldsWithValueAlreadyTakenException;
+import com.orion.mdd.exception.NotFoundException;
 import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,5 +35,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ex.getFieldNames().forEach(fn -> fieldErrors.add(new FieldErrorDto(fn, "déjà utilisé")));
 
         return new ResponseEntity<>(fieldErrors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<String> handleNotFoundException(NotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 }
