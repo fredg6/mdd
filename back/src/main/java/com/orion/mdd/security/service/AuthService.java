@@ -1,11 +1,11 @@
 package com.orion.mdd.security.service;
 
-import com.orion.mdd.exception.NotFoundException;
 import com.orion.mdd.exception.RefreshTokenException;
 import com.orion.mdd.repository.UserRepository;
 import com.orion.mdd.security.jwt.JwtUtils;
 import com.orion.mdd.security.model.RefreshToken;
 import com.orion.mdd.security.repository.RefreshTokenRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -48,7 +48,7 @@ public class AuthService {
 
     public String refreshJwt(Long userId) {
         var maybeRefreshToken = refreshTokenRepository.findByUserId(userId);
-        return maybeRefreshToken.map(this::refreshJwt).orElseThrow(() -> new NotFoundException(("Refresh token not found for user id: " + userId)));
+        return maybeRefreshToken.map(this::refreshJwt).orElseThrow(() -> new EntityNotFoundException("Refresh token not found for user id: " + userId));
     }
 
     public String refreshJwt(String refreshToken) {
