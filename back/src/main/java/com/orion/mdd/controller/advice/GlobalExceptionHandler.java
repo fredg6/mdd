@@ -3,8 +3,8 @@ package com.orion.mdd.controller.advice;
 import com.orion.mdd.dto.payload.response.FieldErrorDto;
 import com.orion.mdd.dto.payload.response.MessageDto;
 import com.orion.mdd.exception.FieldsWithValueAlreadyTakenException;
-import com.orion.mdd.exception.NotFoundException;
 import com.orion.mdd.exception.RefreshTokenException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -39,8 +39,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.badRequest().body(fieldErrors);
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<MessageDto> handleNotFoundException(NotFoundException ex) {
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<MessageDto> handleEntityNotFoundException(EntityNotFoundException ex) {
         return new ResponseEntity<>(new MessageDto(ex.getMessage()), HttpStatus.NOT_FOUND);
     }
 

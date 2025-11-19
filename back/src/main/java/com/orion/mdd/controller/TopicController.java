@@ -1,11 +1,11 @@
 package com.orion.mdd.controller;
 
 import com.orion.mdd.dto.payload.response.TopicDto;
+import com.orion.mdd.security.service.CustomUserDetails;
 import com.orion.mdd.service.TopicService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +23,13 @@ public class TopicController {
     @GetMapping
     public ResponseEntity<List<TopicDto>> all() {
         return ResponseEntity.ok(topicService.getAll());
+    }
+
+    @PostMapping("/{id}/subscription")
+    public ResponseEntity<?> subscribe(@PathVariable Long id, Authentication authentication) {
+        var principal = (CustomUserDetails) authentication.getPrincipal();
+        topicService.subscribe(id, principal.getUsername());
+
+        return ResponseEntity.ok().build();
     }
 }

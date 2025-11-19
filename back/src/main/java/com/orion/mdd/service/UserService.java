@@ -2,10 +2,10 @@ package com.orion.mdd.service;
 
 import com.orion.mdd.dto.payload.response.UserResponseDto;
 import com.orion.mdd.exception.FieldsWithValueAlreadyTakenException;
-import com.orion.mdd.exception.NotFoundException;
 import com.orion.mdd.mapper.UserMapper;
 import com.orion.mdd.model.User;
 import com.orion.mdd.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +59,7 @@ public class UserService {
     }
 
     public UserResponseDto getUserByUsername(String username) {
-        var user = userRepository.findByUsername(username).orElseThrow(() -> new NotFoundException("User not found with username: " + username));
+        var user = userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found with username: " + username));
 
         return UserMapper.INSTANCE.userToUserResponseDto(user);
     }
