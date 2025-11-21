@@ -31,4 +31,14 @@ public class TopicService {
 
         return true;
     }
+
+    public boolean unsubscribe(Long id, String username) {
+        var topic = topicRepository.getReferenceById(id);
+        var user = userRepository.findByUsername(username).get();
+        if (user.getSubscribedTopics().remove(topic)) {
+            userRepository.save(user);
+        }
+
+        return true;
+    }
 }
