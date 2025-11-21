@@ -32,4 +32,12 @@ public class TopicController {
 
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/{id}/subscription")
+    public ResponseEntity<?> unsubscribe(@PathVariable Long id, Authentication authentication) {
+        var principal = (CustomUserDetails) authentication.getPrincipal();
+        topicService.unsubscribe(id, principal.getUsername());
+
+        return ResponseEntity.ok().build();
+    }
 }
