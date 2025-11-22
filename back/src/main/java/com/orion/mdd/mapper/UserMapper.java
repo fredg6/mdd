@@ -1,7 +1,6 @@
 package com.orion.mdd.mapper;
 
 import com.orion.mdd.dto.payload.request.UserRequestDto;
-import com.orion.mdd.dto.payload.response.UserResponseDto;
 import com.orion.mdd.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -13,6 +12,4 @@ public interface UserMapper {
 
     @Mapping(ignore = true, target = "subscribedTopics")
     User userRequestDtoToUser(UserRequestDto userRequestDto);
-
-    UserResponseDto userToUserResponseDto(User user);
 }

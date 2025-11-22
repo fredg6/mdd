@@ -1,8 +1,16 @@
 package com.orion.mdd.dto.payload.response;
 
-import com.orion.mdd.model.Topic;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Set;
 
-public record UserResponseDto(String email, String username, Set<Topic> subscribedTopics) {
+@NoArgsConstructor
+@Getter
+@Setter
+public class UserResponseDto extends BaseEntityDto {
+    private String email;
+    private String username;
+    private Set<TopicDto> subscribedTopics;
 }

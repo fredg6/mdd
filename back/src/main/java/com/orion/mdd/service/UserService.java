@@ -1,15 +1,20 @@
 package com.orion.mdd.service;
 
+import com.orion.mdd.dto.payload.response.PostDto;
 import com.orion.mdd.dto.payload.response.UserResponseDto;
 import com.orion.mdd.exception.FieldsWithValueAlreadyTakenException;
-import com.orion.mdd.mapper.UserMapper;
+import com.orion.mdd.mapper.BaseEntityMapper;
+import com.orion.mdd.mapper.PostMapper;
+import com.orion.mdd.model.Post;
 import com.orion.mdd.model.User;
 import com.orion.mdd.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
@@ -61,6 +66,17 @@ public class UserService {
     public UserResponseDto getUserByUsername(String username) {
         var user = userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found with username: " + username));
 
-        return UserMapper.INSTANCE.userToUserResponseDto(user);
+        return (UserResponseDto) BaseEntityMapper.INSTANCE.baseEntityToBaseEntityDto(user);
+    }
+
+    public List<PostDto> getUserFeed(Sort.Direction sortDirection, String username) {
+        var user = userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found with username: " + username));
+        var unsortedUserFeed = new ArrayList<Post>();
+        user.getSubscribedTopics().forEach(t -> unsortedUserFeed.addAll(t.getPosts()));
+        var sortedUserFeed = unsortedUserFeed.stream().sorted(
+                Sort.Direction.ASC.equals(sortDirection) ? Comparator.comparing(Post::getCreatedAt) : Comparator.comparing(Post::getCreatedAt).reversed()
+        ).toList();
+
+        return PostMapper.INSTANCE.postsToPostDtos(sortedUserFeed);
     }
 }

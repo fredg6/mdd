@@ -7,7 +7,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class TopicDto extends BaseEntityDto {
-    private String title;
-    private String description;
+public class BaseEntityDto {
+    private Long id;
 }

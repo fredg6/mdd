@@ -1,9 +1,12 @@
 package com.orion.mdd.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.Accessors;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,4 +24,6 @@ public class Topic extends BaseEntity {
     @NotBlank
     private String title;
     private String description;
+    @OneToMany(mappedBy = "topic")
+    private Set<Post> posts;
 }
