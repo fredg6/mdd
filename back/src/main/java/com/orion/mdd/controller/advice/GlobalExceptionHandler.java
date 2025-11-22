@@ -44,8 +44,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new MessageDto(ex.getMessage()), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(RefreshTokenException.class)
-    public ResponseEntity<MessageDto> handleRefreshTokenException(RefreshTokenException ex) {
+    @ExceptionHandler({RefreshTokenException.class, IllegalArgumentException.class})
+    public ResponseEntity<MessageDto> handleRuntimeException(RuntimeException ex) {
         return ResponseEntity.badRequest().body(new MessageDto(ex.getMessage()));
     }
 }

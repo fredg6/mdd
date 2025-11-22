@@ -15,10 +15,7 @@ public class CustomAuditorAware implements AuditorAware<String> {
             return Optional.empty();
         }
 
-        var auditor = "SYSTEM";
-        if (authentication.getPrincipal() instanceof CustomUserDetails) {
-            auditor = ((CustomUserDetails) authentication.getPrincipal()).getUsername();
-        }
+        var auditor = ((CustomUserDetails) authentication.getPrincipal()).getUsername();
 
         return Optional.of(auditor);
     }

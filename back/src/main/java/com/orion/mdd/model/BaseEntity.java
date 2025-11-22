@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EqualsAndHashCode(of = "id", callSuper = false)
 @MappedSuperclass
-public abstract class BaseEntity extends Auditable {
+public abstract class BaseEntity {
     public static final String ID_COLUMN_NAME = "id";
 
     @Id
