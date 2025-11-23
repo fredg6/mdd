@@ -1,9 +1,6 @@
 package com.orion.mdd.config;
 
-import com.orion.mdd.model.BaseEntity;
-import com.orion.mdd.model.Post;
-import com.orion.mdd.model.Topic;
-import com.orion.mdd.model.User;
+import com.orion.mdd.model.*;
 import com.orion.mdd.security.model.RefreshToken;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.model.naming.Identifier;
@@ -46,6 +43,12 @@ public class PersistenceConfig extends ColumnOrderingStrategyStandard implements
                     toReturn.add(getColumn(table, Post.CONTENT_COLUMN_NAME));
                     toReturn.add(getColumn(table, Post.CREATED_AT_COLUMN_NAME));
                     toReturn.add(getColumn(table, Post.CREATED_BY_COLUMN_NAME));
+                }
+                case Comment.TABLE_NAME -> {
+                    toReturn.add(getColumn(table, Comment.POST_ID_COLUMN_NAME));
+                    toReturn.add(getColumn(table, Comment.CONTENT_COLUMN_NAME));
+                    toReturn.add(getColumn(table, Comment.CREATED_AT_COLUMN_NAME));
+                    toReturn.add(getColumn(table, Comment.CREATED_BY_COLUMN_NAME));
                 }
                 case RefreshToken.TABLE_NAME -> {
                     toReturn.add(getColumn(table, RefreshToken.USER_ID_COLUMN_NAME));
