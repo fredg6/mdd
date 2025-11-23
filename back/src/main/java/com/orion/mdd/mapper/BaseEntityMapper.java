@@ -1,7 +1,7 @@
 package com.orion.mdd.mapper;
 
 import com.orion.mdd.dto.payload.response.BaseEntityDto;
-import com.orion.mdd.dto.payload.response.PostDto;
+import com.orion.mdd.dto.payload.response.PostResponseDto;
 import com.orion.mdd.dto.payload.response.TopicDto;
 import com.orion.mdd.dto.payload.response.UserResponseDto;
 import com.orion.mdd.model.BaseEntity;
@@ -20,7 +20,7 @@ public interface BaseEntityMapper {
     @SubclassMappings({
             @SubclassMapping(source = User.class, target = UserResponseDto.class),
             @SubclassMapping(source = Topic.class, target = TopicDto.class),
-            @SubclassMapping(source = Post.class, target = PostDto.class)
+            @SubclassMapping(source = Post.class, target = PostResponseDto.class)
     })
     BaseEntityDto baseEntityToBaseEntityDto(BaseEntity baseEntity);
 }
