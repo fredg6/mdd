@@ -20,10 +20,14 @@ public abstract class PostMapper implements BaseEntityMapper {
 
     public abstract List<PostResponseDto> postsToPostResponseDtos(List<Post> posts);
 
+    @Mapping(source = "topic.title", target = "topicTitle")
+    public abstract PostResponseDto postToPostResponseDto(Post post);
+
     @Mappings({
             @Mapping(target = "topic", expression = "java(topicService.getById(postRequestDto.getTopicId()))"),
             @Mapping(ignore = true, target = "createdAt"),
-            @Mapping(ignore = true, target = "createdBy")
+            @Mapping(ignore = true, target = "createdBy"),
+            @Mapping(ignore = true, target = "comments")
     })
     public abstract Post postRequestDtoToPost(PostRequestDto postRequestDto);
 }

@@ -2,7 +2,6 @@ package com.orion.mdd.controller;
 
 import com.orion.mdd.dto.payload.request.PostRequestDto;
 import com.orion.mdd.dto.payload.response.PostResponseDto;
-import com.orion.mdd.mapper.BaseEntityMapper;
 import com.orion.mdd.mapper.PostMapper;
 import com.orion.mdd.service.PostService;
 import jakarta.validation.Valid;
@@ -27,12 +26,12 @@ public class PostController {
         var postToCreate = postMapper.postRequestDtoToPost(postRequestDto);
         var createdPost = postService.add(postToCreate);
 
-        return ResponseEntity.ok((PostResponseDto) BaseEntityMapper.INSTANCE.baseEntityToBaseEntityDto(createdPost));
+        return ResponseEntity.ok(postMapper.postToPostResponseDto(createdPost));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PostResponseDto> one(@PathVariable Long id) {
         var post = postService.getById(id);
-        return ResponseEntity.ok((PostResponseDto) BaseEntityMapper.INSTANCE.baseEntityToBaseEntityDto(post));
+        return ResponseEntity.ok(postMapper.postToPostResponseDto(post));
     }
 }
