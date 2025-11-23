@@ -1,6 +1,6 @@
 package com.orion.mdd.service;
 
-import com.orion.mdd.dto.payload.response.PostDto;
+import com.orion.mdd.dto.payload.response.PostResponseDto;
 import com.orion.mdd.dto.payload.response.UserResponseDto;
 import com.orion.mdd.exception.FieldsWithValueAlreadyTakenException;
 import com.orion.mdd.mapper.BaseEntityMapper;
@@ -23,10 +23,12 @@ import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final PostMapper postMapper;
 
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, PostMapper postMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.postMapper = postMapper;
     }
 
     public User save(User user) {
@@ -69,7 +71,7 @@ public class UserService {
         return (UserResponseDto) BaseEntityMapper.INSTANCE.baseEntityToBaseEntityDto(user);
     }
 
-    public List<PostDto> getUserFeed(Sort.Direction sortDirection, String username) {
+    public List<PostResponseDto> getUserFeed(Sort.Direction sortDirection, String username) {
         var user = userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found with username: " + username));
         var unsortedUserFeed = new ArrayList<Post>();
         user.getSubscribedTopics().forEach(t -> unsortedUserFeed.addAll(t.getPosts()));
@@ -77,6 +79,6 @@ public class UserService {
                 Sort.Direction.ASC.equals(sortDirection) ? Comparator.comparing(Post::getCreatedAt) : Comparator.comparing(Post::getCreatedAt).reversed()
         ).toList();
 
-        return PostMapper.INSTANCE.postsToPostDtos(sortedUserFeed);
+        return postMapper.postsToPostResponseDtos(sortedUserFeed);
     }
 }

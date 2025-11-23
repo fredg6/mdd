@@ -2,8 +2,10 @@ package com.orion.mdd.service;
 
 import com.orion.mdd.dto.payload.response.TopicDto;
 import com.orion.mdd.mapper.TopicMapper;
+import com.orion.mdd.model.Topic;
 import com.orion.mdd.repository.TopicRepository;
 import com.orion.mdd.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +18,10 @@ public class TopicService {
     public TopicService(TopicRepository topicRepository, UserRepository userRepository) {
         this.topicRepository = topicRepository;
         this.userRepository = userRepository;
+    }
+
+    public Topic getById(Long id) {
+        return topicRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Topic not found with id: " + id));
     }
 
     public List<TopicDto> getAll() {

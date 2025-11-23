@@ -1,6 +1,6 @@
 package com.orion.mdd.controller;
 
-import com.orion.mdd.dto.payload.response.PostDto;
+import com.orion.mdd.dto.payload.response.PostResponseDto;
 import com.orion.mdd.security.service.CustomUserDetails;
 import com.orion.mdd.service.UserService;
 import org.springframework.data.domain.Sort;
@@ -25,8 +25,8 @@ public class UserController {
     }
 
     @GetMapping("/feed")
-    public ResponseEntity<List<PostDto>> feed(@RequestParam Sort.Direction sortDirection, Authentication authentication) {
+    public ResponseEntity<List<PostResponseDto>> feed(@RequestParam String sortDirection, Authentication authentication) {
         var principal = (CustomUserDetails) authentication.getPrincipal();
-        return ResponseEntity.ok(userService.getUserFeed(sortDirection, principal.getUsername()));
+        return ResponseEntity.ok(userService.getUserFeed(Sort.Direction.fromString(sortDirection), principal.getUsername()));
     }
 }
