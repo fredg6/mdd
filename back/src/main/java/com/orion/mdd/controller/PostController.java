@@ -7,10 +7,7 @@ import com.orion.mdd.mapper.PostMapper;
 import com.orion.mdd.service.PostService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -31,5 +28,11 @@ public class PostController {
         var createdPost = postService.add(postToCreate);
 
         return ResponseEntity.ok((PostResponseDto) BaseEntityMapper.INSTANCE.baseEntityToBaseEntityDto(createdPost));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PostResponseDto> one(@PathVariable Long id) {
+        var post = postService.getById(id);
+        return ResponseEntity.ok((PostResponseDto) BaseEntityMapper.INSTANCE.baseEntityToBaseEntityDto(post));
     }
 }

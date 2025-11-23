@@ -1,13 +1,7 @@
 package com.orion.mdd.mapper;
 
-import com.orion.mdd.dto.payload.response.BaseEntityDto;
-import com.orion.mdd.dto.payload.response.PostResponseDto;
-import com.orion.mdd.dto.payload.response.TopicDto;
-import com.orion.mdd.dto.payload.response.UserResponseDto;
-import com.orion.mdd.model.BaseEntity;
-import com.orion.mdd.model.Post;
-import com.orion.mdd.model.Topic;
-import com.orion.mdd.model.User;
+import com.orion.mdd.dto.payload.response.*;
+import com.orion.mdd.model.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.SubclassMapping;
 import org.mapstruct.SubclassMappings;
@@ -20,7 +14,8 @@ public interface BaseEntityMapper {
     @SubclassMappings({
             @SubclassMapping(source = User.class, target = UserResponseDto.class),
             @SubclassMapping(source = Topic.class, target = TopicDto.class),
-            @SubclassMapping(source = Post.class, target = PostResponseDto.class)
+            @SubclassMapping(source = Post.class, target = PostResponseDto.class),
+            @SubclassMapping(source = Comment.class, target = CommentResponseDto.class)
     })
     BaseEntityDto baseEntityToBaseEntityDto(BaseEntity baseEntity);
 }
