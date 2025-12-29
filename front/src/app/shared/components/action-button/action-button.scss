@@ -1,0 +1,9 @@
+.action-button {
+	border-radius: 0.5rem;
+	padding: 0.75rem 1.5rem;
+	font-size: 1rem;
+	border: var(--actionButtonBorder);
+	background-color: var(--actionButtonBgColor);
+	color: var(--actionButtonColor);
+	font-weight: var(--actionButtonFontWeight);
+}

@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10vh;
+}
+
+.element {
+    width: 50vw;
+}
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+}
+
+.button-group--handset-portrait {
+    height: 20vh;
+}
+
+app-action-button {
+	--actionButtonBorder: 1px solid #000000;
+	--actionButtonBgColor: #FFFFFF;
+	--actionButtonColor: #000000;
+	--actionButtonFontWeight: 600;
+}
