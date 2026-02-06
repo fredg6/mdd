@@ -8,4 +8,6 @@ import { Component, input } from '@angular/core';
 })
 export class ActionButton {
   label = input.required<string>();
+  type = input<string>();
+  isDisabled = input<boolean>();
 }
