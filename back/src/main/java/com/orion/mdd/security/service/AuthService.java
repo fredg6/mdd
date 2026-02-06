@@ -58,7 +58,6 @@ public class AuthService {
 
     private String refreshJwt(RefreshToken refreshToken) {
         if (isTokenExpired(refreshToken)) {
-            refreshTokenRepository.delete(refreshToken);
             throw new RefreshTokenException("Refresh token expired. Please login again.");
         }
         return jwtUtils.buildJwt(refreshToken.getUser().getUsername());

@@ -1,3 +1,6 @@
+INSERT INTO user (email, username, password)
+VALUES('test@orion.com', 'test', '$2a$10$ZzZgj9B3JBiVXvtgM3PRrODWiB9AC5lpxgey3dbfZZBhrxpeFhE7e');
+
 INSERT INTO topic (title, description)
 VALUES ('Topic #1', 'First topic'),
        ('Topic #2', 'Second topic'),
@@ -24,3 +27,7 @@ VALUES (1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod
        (5, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, ante quis tincidunt tincidunt, libero massa tincidunt sapien, vitae molestie justo nibh quis nisi.', '2025-04-22', 'SYSTEM'),
        (6, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, ante quis tincidunt tincidunt, libero massa tincidunt sapien, vitae molestie justo nibh quis nisi.', '2025-02-22', 'SYSTEM'),
        (6, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, ante quis tincidunt tincidunt, libero massa tincidunt sapien, vitae molestie justo nibh quis nisi.', '2025-08-22', 'SYSTEM');
+
+INSERT INTO subscription
+VALUES (1, 1),
+       (1, 3);
