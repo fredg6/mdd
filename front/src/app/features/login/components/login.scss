@@ -1,0 +1,43 @@
+.container {
+    display: grid;
+    grid: 
+        [row1-start] "header header header" 1fr [row1-end]
+        [row2-start] "back-arrow form ." 1.75fr [row2-end]
+        / 1fr 7fr 1fr;
+    gap: 2rem;
+}
+
+.header {
+    grid-area: header;
+}
+
+.back-arrow {
+    grid-area: back-arrow;
+    justify-self: center;
+}
+
+.form {
+    grid-area: form;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.form__title {
+    font-size: 1.5rem;
+}
+
+.form__fields {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 15vh;
+}
+
+app-action-button {
+	--actionButtonBgColor: #7763C5;
+	--actionButtonColor: #FFFFFF;
+	--actionButtonFontWeight: 700;
+}

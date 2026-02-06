@@ -4,7 +4,20 @@
     font-family: Inter, sans-serif;
 }
 
-.logo {
+.image {
     max-width: 100%;
     height: auto;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    width: 15vw;
+}
+
+.form-field__input {
+    border: 1px solid #000000;
+    border-radius: 0.5rem;
+    font-size: 1.25rem;
+    height: 3vh;
 }

@@ -1,0 +1,18 @@
+<div class="container">
+    <app-header class="header" />
+    <img class="image back-arrow" src="/images/back-arrow.png" alt="Back arrow" (click)="goBack()"/>
+    <div class="form">
+        <span class="form__title">Se connecter</span>
+        <form class="form__fields" [formGroup]="form" (ngSubmit)="submit()">
+            <div class="form-field">
+                <label for="email-or-username">E-mail ou nom d’utilisateur</label>
+                <input class="form-field__input" id="email-or-username" formControlName="emailOrUsername" />
+            </div>
+            <div class="form-field">
+                <label for="password">Mot de passe</label>
+                <input class="form-field__input" id="password" type="password" formControlName="password" />
+            </div>
+            <app-action-button label="Se connecter" [isDisabled]="form.invalid"/>
+        </form>
+    </div>
+</div>
